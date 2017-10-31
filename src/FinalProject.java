@@ -1,24 +1,23 @@
 import java.util.*;
 import java.io.*;
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 public class FinalProject {
      public static void main(String[] args) throws FileNotFoundException
      {
-         Scanner keyboard = new Scanner(System.in);
+         viewIntro();
+         JFrame frame = new JFrame();
          boolean logedIn = false;
-         
-         
-         readPass(keyboard, logedIn);
+         readPass(logedIn, frame);
          //quizTime(keyboard);
         
-     }
+     }   
      
-     
-     private static void readPass(Scanner keyboard, boolean logedIn) throws
+     private static void readPass(boolean logedIn, JFrame frame) throws
              FileNotFoundException{ 
 //Check For Userpassword
-         File userFile = new File("UsersInfo_006.txt");
-         
+         File userFile = new File("UsersInfo_006.txt");         
          while(!userFile.canRead())
          {
              System.out.println("UserInfo can Not found, please make sure its in" 
@@ -26,38 +25,42 @@ public class FinalProject {
              break;
          }
          Scanner uFile = new Scanner(userFile);
-         String userName, passWord;
+         
          int failedAttempts = 0;
          
-         while(uFile.hasNext())
-         {
-             String userInfo = uFile.nextLine();
-             String[] userArray = userInfo.split("\t");
-             System.out.println("Please Enter your Username: ");
-             userName = keyboard.next();
-             System.out.println("Password: ");
-             passWord = keyboard.next();
-             
-             while(failedAttempts != 3)
-             {
-                for(int x = 0; x <= userArray.length; x++)
-                {
-                    if(!userName.equals(userArray[0]) && 
-                            !passWord.equals(userArray[1]))
-                    {
-                        logedIn = true;
-                        quizTime(keyboard);
-                    }      
-                    else
-                    {
-                       failedAttempts++; 
-                       System.out.println("Login Failed Try again!");
-                       readPass(keyboard, logedIn);
-                    }
-                }
-             }
-             
-         }
+         Object userName = JOptionPane.showInputDialog(frame, "Enter Username: ");
+         Object passWord = JOptionPane.showInputDialog(frame, "Please Enter Pass"
+                 + "word: ");
+         
+//         while(uFile.hasNext())
+//         {
+//             String userInfo = uFile.nextLine();
+//             String[] userArray = userInfo.split("\t");
+//             System.out.println("Please Enter your Username: ");
+//             userName = keyboard.next();
+//             System.out.println("Password: ");
+//             passWord = keyboard.next();
+//             
+//             while(failedAttempts != 3)
+//             {
+//                for(int x = 0; x <= userArray.length; x++)
+//                {
+//                    if(!userName.equals(userArray[0]) && 
+//                            !passWord.equals(userArray[1]))
+//                    {
+//                        logedIn = true;
+//                        quizTime(keyboard);
+//                    }      
+//                    else
+//                    {
+//                       failedAttempts++; 
+//                       System.out.println("Login Failed Try again!");
+//                       readPass(keyboard, logedIn);
+//                    }
+//                }
+//             }
+//             
+//         }
          
          
          
@@ -101,11 +104,18 @@ public class FinalProject {
          
          for(int i = 0; i <= numbQs;i++)
          {
+             int x = randNumb.nextInt(124) + 1;
+             System.out.println(qList.get(x));
+             String userAnswer = keyboard.next(); 
              
          }
          
          
          
      }
+
+    private static void viewIntro() {
+         JOptionPane.showMessageDialog(null, "Welcome to the Quiz App! Please have you're username and password ready!", "QuizTime",  JOptionPane.INFORMATION_MESSAGE);
+    }
     
 }
